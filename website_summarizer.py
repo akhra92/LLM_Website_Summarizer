@@ -40,7 +40,7 @@ class Website:
         response.raise_for_status()
         soup = BeautifulSoup(response.content, "html.parser")
         self.title = soup.title.string if soup.title else "No title found"
-        for tag in soup.body(["script", "style", "img", "input"]):
+        for tag in soup.body(["script", "style", "img", "input", "nav", "footer", "header", "aside", "form"]):
             tag.decompose()
         raw_text = soup.body.get_text(separator="\n", strip=True)
         self.text = raw_text[:MAX_TEXT_CHARS]
