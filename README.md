@@ -4,9 +4,10 @@ A command-line tool that scrapes any website and generates a concise markdown su
 
 ## Features
 
-- Scrapes and cleans website content using BeautifulSoup
+- Scrapes and cleans website content using BeautifulSoup (strips nav, footer, header, aside, and form elements for cleaner output)
 - Summarizes content via OpenAI (`gpt-4o-mini` by default) or a local Ollama model
 - Three Ollama calling approaches: direct HTTP, Python package, OpenAI-compatible client
+- Automatically truncates large pages to 20,000 characters (~5k tokens) to control costs and avoid token limits
 - Simple CLI interface with configurable model and backend
 
 ## Requirements
@@ -82,3 +83,4 @@ website-summarizer/
 - JavaScript-rendered pages (React, Vue, etc.) won't be scraped correctly — only static HTML is supported.
 - Some sites protected by Cloudflare or similar services may return a 403 error.
 - Ollama must be running locally (`ollama serve`) before using the `--backend ollama` option.
+- Pages exceeding 20,000 characters are automatically truncated. The tool will print a note when this happens.
