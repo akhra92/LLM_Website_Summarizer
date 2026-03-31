@@ -150,6 +150,10 @@ def parse_args() -> argparse.Namespace:
         dest="ollama_approach",
         help="How to call Ollama (default: openai-compatible)"
     )
+    parser.add_argument(
+        "-o", "--output",
+        help="Save the summary to a markdown file (e.g. -o summary.md)"
+    )
     return parser.parse_args()
 
 
@@ -178,6 +182,14 @@ def main():
         sys.exit(f"Error: Summarization failed: {e}")
 
     print(summary)
+
+    if args.output:
+        try:
+            with open(args.output, "w", encoding="utf-8") as f:
+                f.write(f"# {website.title}\n\n{summary}\n")
+            print(f"\n{'─' * 60}\nSummary saved to {args.output}")
+        except OSError as e:
+            sys.exit(f"Error: Could not write to '{args.output}': {e}")
 
 
 if __name__ == "__main__":
